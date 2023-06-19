@@ -76,7 +76,6 @@ prompt-toolkit==3.0.38
 psutil==5.9.5
 pure-eval==0.2.2
 pycparser==2.21
-pygame @ file:///C:/Users/Tokinoshi/Downloads/pygame-2.4.0-cp38-cp38-win_amd64.whl#sha256=6ba967d0e3fed8611f1face6695dc8fa554ee543d300681f8080f5de9cc7da73
 Pygments==2.15.1
 pyparsing==3.0.9
 pyrsistent==0.19.3
