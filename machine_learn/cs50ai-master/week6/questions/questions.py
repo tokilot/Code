@@ -9,13 +9,13 @@ SENTENCE_MATCHES = 1
 
 
 def main():
-
-    # Check command-line arguments
-    if len(sys.argv) != 2:
-        sys.exit("Usage: python questions.py corpus")
-
-    # Calculate IDF values across files
-    files = load_files(sys.argv[1])
+    # # Check command-line arguments
+    # if len(sys.argv) != 2:
+    #     sys.exit("Usage: python questions.py corpus")
+    #
+    # # Calculate IDF values across files
+    # files = load_files(sys.argv[1])
+    files = load_files("corpus")
     file_words = {
         filename: tokenize(files[filename])
         for filename in files

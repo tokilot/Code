@@ -1,4 +1,5 @@
 import nltk
+import os
 import sys
 
 TERMINALS = """
@@ -15,7 +16,9 @@ V -> "smiled" | "tell" | "were"
 """
 
 NONTERMINALS = """
-S -> N V
+S -> NP V NP
+NP -> N V|N
+N -> N|Det N
 """
 
 grammar = nltk.CFG.fromstring(NONTERMINALS + TERMINALS)
@@ -23,13 +26,18 @@ parser = nltk.ChartParser(grammar)
 
 
 def main():
-
-    # If filename specified, read sentence from file
-    if len(sys.argv) == 2:
-        with open(sys.argv[1]) as f:
+    # # If filename specified, read sentence from file
+    # if len(sys.argv) == 2:
+    #     with open(sys.argv[1]) as f:
+    #         s = f.read()
+    #
+    # # Otherwise, get sentence as input
+    # else:
+    #     s = input("Sentence: ")
+    filename = os.path.join("sentences", input("choose the parse content:") + ".txt")
+    if filename in os.listdir("sentences"):
+        with open(filename) as f:
             s = f.read()
-
-    # Otherwise, get sentence as input
     else:
         s = input("Sentence: ")
 
@@ -62,7 +70,9 @@ def preprocess(sentence):
     and removing any word that does not contain at least one alphabetic
     character.
     """
-    raise NotImplementedError
+    words = nltk.word_tokenize(sentence)
+    words = [str.lower(word) for word in words if word.isalpha()]
+    return words
 
 
 def np_chunk(tree):
@@ -72,7 +82,13 @@ def np_chunk(tree):
     whose label is "NP" that does not itself contain any other
     noun phrases as subtrees.
     """
-    raise NotImplementedError
+    chunks = []
+    for subtree in tree.subtrees():
+        if subtree.label() == "NP":
+            for np_sub in subtree.subtrees():
+                if np_sub.label() == "N" and len(list(np_sub.subtrees())) == 1:
+                    chunks.append(np_sub)
+    return chunks
 
 
 if __name__ == "__main__":
